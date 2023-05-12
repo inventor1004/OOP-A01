@@ -27,24 +27,27 @@ char* getString(char * pointerToInput);
 
 int main(void)
 {
-    char* pointerToInput = (char*)calloc(kMaximumCharacters, sizeof(char));
-    printf("Enter Student¡¯s Grade(s) >>>");
-    
-    pointerToInput = getString(pointerToInput);
+    char* pPointerToInput = (char*)calloc(kMaximumCharacters, sizeof(char));
 
-    printf("%c", *pointerToInput);
+    // get the user input of student's grades
+    // The information getting from the user can be found by pointer to char 
+    // called 'pPointerToInput'
+    printf("Enter Student¡¯s Grade(s) >>>");
+    pPointerToInput = getString(pPointerToInput);
+
+    
 
     return 0;
 }
 
 # pragma warning(disable: 4996)
-char* getString(char* pointerToInput)
+char* getString(char* pPointerToInput)
 {
     char userInput[kMaximumCharacters] = { };
     char tempStorage[kMaximumCharacters] = { };
     int i = 0;
 
-    pointerToInput = userInput;
+    pPointerToInput = userInput;
 
     fgets(tempStorage, kMaximumCharacters, stdin);
 
@@ -59,5 +62,5 @@ char* getString(char* pointerToInput)
         i += strlen(&userInput[i]);
     }
 
-    return pointerToInput;
+    return pPointerToInput;
 }
