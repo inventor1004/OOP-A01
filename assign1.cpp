@@ -79,7 +79,14 @@ int main(void)
             // 3. special letter
             // 3. file name
             if ((isNum = atoi(pCheckTheInput2)) != 0)
-            {
+            { 
+                if (isNum < 0 || isNum > 100)
+                {
+                    printf("Invalied number was entered.\n");
+                    printf("The range of the grade should be more than 0 and less than 100.\n");
+
+                    return 0;
+                }
                 totalScore += isNum;
                 checkTheInput1[i] = '0';
                 i = -1;
