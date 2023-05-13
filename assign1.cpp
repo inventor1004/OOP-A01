@@ -12,55 +12,109 @@
                 The user can exit the program by entering the 'X'
  */
 
+
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h> 
 #include <stdlib.h>
 #include "assessGrade.h"
 
 
 #define kMaximumCharacters 101
+#define kNumberOfGrades 5
 
 
 // Prototypes
-char* getString(char * pointerToInput);
+int getString(char userInput[]);
 
 
+
+# pragma warning(disable: 4996)
 int main(void)
 {
-    char* pPointerToInput = (char*)calloc(kMaximumCharacters, sizeof(char));
+    char userInput[kMaximumCharacters] = { };
+    char checkTheInput1[kMaximumCharacters] = { };
+    char checkTheInput2[kMaximumCharacters] = { };
+  
+    char* pCheckTheInput1 = (char*)calloc(kMaximumCharacters, sizeof(char));
+    char* pCheckTheInput2 = (char*)calloc(kMaximumCharacters, sizeof(char));
+    char* pTempStorage = (char*)calloc(kMaximumCharacters, sizeof(char));
+
+    int score = 0;
+    int totalScore = 0;
+    int isNum = 0;
+    int i = 0;
+
 
     // get the user input of student's grades
-    // The information getting from the user can be found by pointer to char 
-    // called 'pPointerToInput'
+    // The information getting from the user will be stored in
+    // char array called 'userInput'
     printf("Enter Student¡¯s Grade(s) >>>");
-    pPointerToInput = getString(pPointerToInput);
+    if (getString(userInput) != 0)
+    {
+        printf("Invalid input was entered.");
+        return 0;
+    }
 
-    
+
+    pTempStorage = userInput;
+    pCheckTheInput1 = checkTheInput1;
+    pCheckTheInput2 = checkTheInput2;
+
+    // Put the user input information to checkTheInput[] step by step to check  
+    // what information did the user enter
+    while ( *pTempStorage != '/n')
+    {
+        checkTheInput1[i] = *pTempStorage;
+
+        // extract the each block of the information separated by spaces
+        if (*pTempStorage == ' ')
+        {
+            *checkTheInput2 = *pCheckTheInput1;
+            checkTheInput2[i] = '\0';
+
+        }
+
+
+        // distinguish what type of grade information did the user entered
+        // 1. number of grade
+        // 2. letter grades 
+        // 3. special letter
+        // 3. file name
+        if ((isNum = atoi(checkTheInput2)) != 0)
+        {
+
+        }
+
+        ++i;
+        ++pTempStorage;
+
+    }
+
 
     return 0;
 }
 
-# pragma warning(disable: 4996)
-char* getString(char* pPointerToInput)
-{
-    char userInput[kMaximumCharacters] = { };
-    char tempStorage[kMaximumCharacters] = { };
-    int i = 0;
 
-    pPointerToInput = userInput;
+
+int getString(char userInput[])
+{
+    char tempStorage[kMaximumCharacters] = { };
+   
+    int i = 0;
+        
 
     fgets(tempStorage, kMaximumCharacters, stdin);
-
     while (tempStorage[i] != NULL)
     {
         if (sscanf(&tempStorage[i], "%s", &userInput[i]) != 1)
         {
-            return 0;
+            return -1;
         }
 
         strcat(&userInput[i], " ");
         i += strlen(&userInput[i]);
     }
 
-    return pPointerToInput;
+    return 0;
 }
