@@ -71,7 +71,7 @@ int main(void)
     // what information did the user enter
     while ( *pTempStorage != NULL)
     {
-        printf("%d %s", i, pTempStorage);
+
         checkTheInput1[i] = *pTempStorage;
 
         // extract the each block of the information separated by spaces
@@ -101,28 +101,30 @@ int main(void)
             }
             else if (*pCheckTheInput2 == 'I')
             {
-                printf("Student has Special Situation : I (Incomplete) ");
+                printf("Student has Special Situation : I (Incomplete)\n");
             }
-            else if (pCheckTheInput2 == "Q")
+            else if (*pCheckTheInput2 == 'Q')
             {
-                printf("Student has Special Situation : Q (Withdrawal After Drop/Refund Date) ");
+                printf("Student has Special Situation : Q (Withdrawal After Drop/Refund Date)\n");
             }
-            else if (pCheckTheInput2 == "AU")
+            else if (*pCheckTheInput2 == 'AU')
             {
-                printf("Student has Special Situation : AU (Audit Condition) ");
+                printf("Student has Special Situation : AU (Audit Condition)\n");
             }
-            else if (pCheckTheInput2 == "DNA")
+            else if (strcmp(pCheckTheInput2, "DNA") == 0)
             {
-                printf("Student has Special Situation : DNA (Did Not Attend) ");
+                printf("Student has Special Situation : DNA (Did Not Attend)\n");
             }
-            else if (pCheckTheInput2 == "I/P" )
+            else if (strcmp(pCheckTheInput2, "I/P") == 0)
             {
-                printf("Student has Special Situation : I/P (In Process) ");
+                printf("Student has Special Situation : I/P (In Process)\n");
+            }
+            else if (*pCheckTheInput2 == 'Z')
+            {
+
             }
 
         }
-
-
 
         ++i;
         ++pTempStorage;
