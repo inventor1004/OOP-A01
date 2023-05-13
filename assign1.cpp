@@ -101,6 +101,8 @@ int main(void)
                     return -1;
                 }
 
+                // extract the integer number of grade
+                // and accumulate to the totalScore
                 totalScore += isNum;
                 checkTheInput1[i] = '0';
                 i = kInitializeTheCount;
@@ -113,6 +115,8 @@ int main(void)
                     return -2;
                 }
 
+                // extract the floating number of grade
+                // and accumulate to the totalScore
                 totalScore += isFloat;
                 checkTheInput1[i] = '0';
                 i = kInitializeTheCount;
@@ -138,9 +142,50 @@ int main(void)
                 printf("Student has Special Situation : I/P (In Process)\n");
             }
             else if (*pCheckTheInput2 == 'Z')
-            {
+            {      
+                // extract the filename
                 ++pTempStorage;
-                break;
+                pCheckTheInput1 = strchr(pTempStorage, ' ');
+                *pCheckTheInput1 = '\0';
+                strcpy(fileName, pTempStorage);
+
+                // open and read the file name
+                fp = fopen(fileName, "r");
+                if (fp == 0)
+                {
+                    // When it fails to open the file, print the error message and returns -4
+                    printf("**File I/O ERROR\n");
+
+                    return -3;
+                }
+                else
+                {              
+                    pTempStorage = fgets(fileName, kMaximumCharacters, fp);
+                    
+                    // Error checking and get first line from teams.txt file
+                    if (pTempStorage == NULL)
+                    {
+                        // if the file can not be written, print the error message
+                        printf("**File I/O ERROR\n");
+                        return -4;
+                    }        
+
+                    // Error checking whether the file closed or not
+                    if (fclose(fp) != 0)
+                    {
+                        printf("**File I/O ERROR\n");
+                        return -5;
+                    }
+
+                    // extra space is required to identify that point is the end of 
+                    // the grade information
+                    pCheckTheInput1 = strchr(pTempStorage, '\0');
+                    *pCheckTheInput1 = ' ';
+
+                    --pTempStorage;
+                    i = kInitializeTheCount;
+                }
+
             }
         }
 
@@ -149,38 +194,7 @@ int main(void)
 
     }
 
-    // extract the filename
-    pCheckTheInput1 = strchr(pTempStorage, ' ');
-    *pCheckTheInput1 = '\0';
-    strcpy(fileName, pTempStorage);
-
-    // open and read the file name
-    fp = fopen(pTempStorage, "r");
-    if (fp == 0)
-    {
-        // When it fails to open the file, print the error message and returns -4
-        printf("**File I/O ERROR\n");
-
-        return -3;
-    }
-    else
-    {
-
-        // Extract file names line by line which are in teams.txt
-        // And deliver the file name to processGames() as a pointer to char parameter.
-        // The while loop repeats until there is nothing to read in the teams.txt file
-        while (pErrorChecker = fgets(fileName, kMaximumCharacters, fp))
-        {
-
-            // Error checking and get first line from teams.txt file
-            if (pErrorChecker == NULL)
-            {
-                // if the file can not be written, print the error message
-                printf("**File I/O ERROR\n");
-                return -4;
-            }
-        }
-    }
+    
 
 
 
