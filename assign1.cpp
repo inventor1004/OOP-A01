@@ -25,6 +25,7 @@
 #define kLetterGrade 3
 #define kSpecialLetter 4
 #define kNumberOfGrades 5
+#define kInitializeTheCount -1
 
 
 // Prototypes
@@ -102,15 +103,19 @@ int main(void)
 
                 totalScore += isNum;
                 checkTheInput1[i] = '0';
-                i = -1;
+                i = kInitializeTheCount;
             }
             else if (isFloat = atof(pCheckTheInput2))
             {
-                if (isNum < 0 || isNum > 100)
+                if (isFloat < 0.0 || isFloat > 100.0)
                 {
                     printf("**ERROR : Invalid Input\n");
                     return -2;
                 }
+
+                totalScore += isFloat;
+                checkTheInput1[i] = '0';
+                i = kInitializeTheCount;
             }
             else if (*pCheckTheInput2 == 'I')
             {
