@@ -21,6 +21,9 @@
 
 
 #define kMaximumCharacters 101
+#define kNumberGrade 4
+#define kLetterGrade 3
+#define kSpecialLetter 4
 #define kNumberOfGrades 5
 
 
@@ -32,18 +35,21 @@ int getString(char userInput[]);
 # pragma warning(disable: 4996)
 int main(void)
 {
+    // c string
     char userInput[kMaximumCharacters] = { };
-    char checkTheInput1[kMaximumCharacters] = { };
-    char checkTheInput2[kMaximumCharacters] = { };
+    char checkTheInput1[kNumberGrade] = { };
   
-    char* pCheckTheInput1 = (char*)calloc(kMaximumCharacters, sizeof(char));
-    char* pCheckTheInput2 = (char*)calloc(kMaximumCharacters, sizeof(char));
+    // pointer to c
+    char* pCheckTheInput1 = (char*)calloc(kNumberGrade, sizeof(char));
+    char* pCheckTheInput2 = (char*)calloc(kNumberGrade, sizeof(char));
     char* pTempStorage = (char*)calloc(kMaximumCharacters, sizeof(char));
 
-    int score = 0;
+    int i = 0;
+
     int totalScore = 0;
     int isNum = 0;
-    int i = 0;
+    char isLetter[kLetterGrade] = {0};
+    
 
 
     // get the user input of student's grades
@@ -63,8 +69,9 @@ int main(void)
 
     // Put the user input information to checkTheInput[] step by step to check  
     // what information did the user enter
-    while ( *pTempStorage != '/n')
+    while ( *pTempStorage != NULL)
     {
+        printf("%d %s", i, pTempStorage);
         checkTheInput1[i] = *pTempStorage;
 
         // extract the each block of the information separated by spaces
@@ -82,15 +89,37 @@ int main(void)
             { 
                 if (isNum < 0 || isNum > 100)
                 {
-                    printf("Invalied number was entered.\n");
-                    printf("The range of the grade should be more than 0 and less than 100.\n");
+                    printf("\tInvalied number was entered.\n");
+                    printf("\tThe range of the grade should be more than 0 and less than 100.\n");
 
                     return 0;
                 }
+
                 totalScore += isNum;
                 checkTheInput1[i] = '0';
                 i = -1;
             }
+            else if (*pCheckTheInput2 == 'I')
+            {
+                printf("Student has Special Situation : I (Incomplete) ");
+            }
+            else if (pCheckTheInput2 == "Q")
+            {
+                printf("Student has Special Situation : Q (Withdrawal After Drop/Refund Date) ");
+            }
+            else if (pCheckTheInput2 == "AU")
+            {
+                printf("Student has Special Situation : AU (Audit Condition) ");
+            }
+            else if (pCheckTheInput2 == "DNA")
+            {
+                printf("Student has Special Situation : DNA (Did Not Attend) ");
+            }
+            else if (pCheckTheInput2 == "I/P" )
+            {
+                printf("Student has Special Situation : I/P (In Process) ");
+            }
+
         }
 
 
@@ -108,15 +137,15 @@ int main(void)
 
 int getString(char userInput[])
 {
-    char tempStorage[kMaximumCharacters] = { };
+    char pTempStorage[kMaximumCharacters] = { };
    
     int i = 0;
         
 
-    fgets(tempStorage, kMaximumCharacters, stdin);
-    while (tempStorage[i] != NULL)
+    fgets(pTempStorage, kMaximumCharacters, stdin);
+    while (pTempStorage[i] != NULL)
     {
-        if (sscanf(&tempStorage[i], "%s", &userInput[i]) != 1)
+        if (sscanf(&pTempStorage[i], "%s", &userInput[i]) != 1)
         {
             return -1;
         }
