@@ -47,10 +47,13 @@ int main(void)
     // calculate and distinguish the score
     int totalScore = 0;
     int isNum = 0;
+    float isFloat = 0.0;
     char isLetter[kLetterGrade] = {0};
     
     // file I/O
-    FILE* ofp = NULL;
+    FILE* fp = NULL;
+    char fileName[kMaximumCharacters] = { "\0" };
+    char *pErrorChecker = (char*)calloc(kMaximumCharacters, sizeof(char));
 
     // extra variables
     int i = 0;
@@ -93,15 +96,21 @@ int main(void)
             { 
                 if (isNum < 0 || isNum > 100)
                 {
-                    printf("\tInvalied number was entered.\n");
-                    printf("\tThe range of the grade should be more than 0 and less than 100.\n");
-
-                    return 0;
+                    printf("**ERROR : Invalid Input\n");
+                    return -1;
                 }
 
                 totalScore += isNum;
                 checkTheInput1[i] = '0';
                 i = -1;
+            }
+            else if (isFloat = atof(pCheckTheInput2))
+            {
+                if (isNum < 0 || isNum > 100)
+                {
+                    printf("**ERROR : Invalid Input\n");
+                    return -2;
+                }
             }
             else if (*pCheckTheInput2 == 'I')
             {
@@ -125,15 +134,49 @@ int main(void)
             }
             else if (*pCheckTheInput2 == 'Z')
             {
-
+                ++pTempStorage;
+                break;
             }
-
         }
 
         ++i;
         ++pTempStorage;
 
     }
+
+    // extract the filename
+    pCheckTheInput1 = strchr(pTempStorage, ' ');
+    *pCheckTheInput1 = '\0';
+    strcpy(fileName, pTempStorage);
+
+    // open and read the file name
+    fp = fopen(pTempStorage, "r");
+    if (fp == 0)
+    {
+        // When it fails to open the file, print the error message and returns -4
+        printf("**File I/O ERROR\n");
+
+        return -3;
+    }
+    else
+    {
+
+        // Extract file names line by line which are in teams.txt
+        // And deliver the file name to processGames() as a pointer to char parameter.
+        // The while loop repeats until there is nothing to read in the teams.txt file
+        while (pErrorChecker = fgets(fileName, kMaximumCharacters, fp))
+        {
+
+            // Error checking and get first line from teams.txt file
+            if (pErrorChecker == NULL)
+            {
+                // if the file can not be written, print the error message
+                printf("**File I/O ERROR\n");
+                return -4;
+            }
+        }
+    }
+
 
 
     return 0;
