@@ -59,7 +59,7 @@ int main(void)
 
     pTempStorage = userInput;
     pCheckTheInput1 = checkTheInput1;
-    pCheckTheInput2 = checkTheInput2;
+    pCheckTheInput2 = checkTheInput1;
 
     // Put the user input information to checkTheInput[] step by step to check  
     // what information did the user enter
@@ -70,21 +70,23 @@ int main(void)
         // extract the each block of the information separated by spaces
         if (*pTempStorage == ' ')
         {
-            *checkTheInput2 = *pCheckTheInput1;
-            checkTheInput2[i] = '\0';
 
+            checkTheInput1[i] = '\0';
+
+            // distinguish what type of grade information did the user entered
+            // 1. number of grade
+            // 2. letter grades 
+            // 3. special letter
+            // 3. file name
+            if ((isNum = atoi(pCheckTheInput2)) != 0)
+            {
+                totalScore += isNum;
+                checkTheInput1[i] = '0';
+                i = -1;
+            }
         }
 
 
-        // distinguish what type of grade information did the user entered
-        // 1. number of grade
-        // 2. letter grades 
-        // 3. special letter
-        // 3. file name
-        if ((isNum = atoi(checkTheInput2)) != 0)
-        {
-
-        }
 
         ++i;
         ++pTempStorage;
