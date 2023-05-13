@@ -44,12 +44,16 @@ int main(void)
     char* pCheckTheInput2 = (char*)calloc(kNumberGrade, sizeof(char));
     char* pTempStorage = (char*)calloc(kMaximumCharacters, sizeof(char));
 
-    int i = 0;
-
+    // calculate and distinguish the score
     int totalScore = 0;
     int isNum = 0;
     char isLetter[kLetterGrade] = {0};
     
+    // file I/O
+    FILE* ofp = NULL;
+
+    // extra variables
+    int i = 0;
 
 
     // get the user input of student's grades
